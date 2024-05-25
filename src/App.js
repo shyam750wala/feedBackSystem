@@ -79,7 +79,6 @@ function App() {
               <Routes>
                 <Route path="/customeradmin/dashboard" element={<MyDashboard />} />
                 <Route path="customeradmin/questionnaires" element={<Show />} />
-                <Route path="customeradmin/questionnaires" element={<Show />} />
                 <Route path="/questionnaire/:id" element={<SingleQuestionnaire />} />
                 <Route path="/questions/create" element={<CreateQuestion />} />
                 <Route path="/customerusers" element={<CustomerUsers />} />
