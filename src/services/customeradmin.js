@@ -172,6 +172,16 @@ export const getAllCustomerUsers = async () =>{
         throw error;
     }
 }
+//Added on 26-05-24 for customeruser as per customeradmin
+export const getCustomerUsersBycustomeradmin = async (customerAdminId) =>{
+    try {
+        const response = await axios.get(`${apiURL}/CustomerUsers/byAdmin/${customerAdminId}`)
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching Customer Users as per customer admin :', error);
+        throw error;
+    }
+}
 
 //[POST] Call to post new QuestionnaireAssignment
 export const postQuestionnaireAssignment = async (questionnaireassignments) =>{
@@ -197,6 +207,7 @@ export const getAllQuestionnaireAssignments = async () =>{
 export const getAllFeedbackDetails = async () =>{
     try {
         const response = await axios.get(`${apiURL}/FeedbackDetails`)
+        console.log("response",response);
         return response.data;
     } catch (error) {
         console.error('Error fetching Feedback details :', error);

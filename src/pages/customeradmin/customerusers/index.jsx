@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import FullEditDataGrid from 'mui-datagrid-full-edit';
 import { Box, Button, Checkbox, Dialog, DialogActions, DialogContent, DialogTitle, FormControlLabel, useTheme } from '@mui/material';
-import { getAllCustomerUsers, getAllQuestionnaireAssignments, getAllQuestionnaires, getCustomerAdminById, getQuestionnaireByCustomerId, getQuestionnaireById, postQuestionnaireAssignment, postQuestionnaireQuestion } from '../../../services/customeradmin';
+import { getAllCustomerUsers, getAllQuestionnaireAssignments, getAllQuestionnaires, getCustomerAdminById, getCustomerUsersBycustomeradmin, getQuestionnaireByCustomerId, getQuestionnaireById, postQuestionnaireAssignment, postQuestionnaireQuestion } from '../../../services/customeradmin';
 import Header from '../../../components/Header';
 import { tokens } from '../../../theme';
 import { object } from 'yup';
@@ -20,19 +20,20 @@ function Index() {
 
     const fetchDataFromApi = async () => {
         try {
-            const apiData = await getAllCustomerUsers();
+            const apiData = await getCustomerUsersBycustomeradmin(3);
             const formattedData = apiData.map((item) => ({
                 id: item.customerUserId,
                 customerUserId: item.customerUserId,
                 customerUserTokenId: item.customerUserTokenId,
                 customerUserName: item.customerUserName,
-                password: item.password,
+                password: item.password,    
                 customerAdminId: item.customerAdminId,
                 status: item.status,
                 QuitionnaireAssign: "Questionnaire Assign",
                 isNew: false
             }));
             setRows(formattedData);
+            console.log("customer users",rows);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -43,7 +44,7 @@ function Index() {
 
         const fetchGetAllQuestionnaire = async () => {
             try {
-                const apiData = await getQuestionnaireByCustomerId(2);
+                const apiData = await getQuestionnaireByCustomerId(3);
                 console.log("api",apiData);
                 setQuestionnaires(apiData);
                 console.log("aaaaaaa",questionnaires);

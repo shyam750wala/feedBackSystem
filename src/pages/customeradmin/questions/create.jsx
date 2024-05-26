@@ -19,7 +19,7 @@ export default function CreateQuestion({ questionCategoryId, questions, question
         async function fetchData() {
             try {
                 // const data = await getQuestionsByCategoryId(questionCategoryId);
-                //const superadminbyname =  await getSuperadminByid();
+                // const superadminbyname =  await getSuperadminByid();
                 setRows(questions.map((row, index) => ({ ...row, id: index + 1, isNew: false }))); // Assigning srNo starting from
             } catch (error) {
                 console.error('Error fetching question banks:', error);
