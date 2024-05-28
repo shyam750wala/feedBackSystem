@@ -16,7 +16,7 @@ export default function Index() {
   useEffect(() => {
     const fetchDataFromApi = async () => {
       try {
-        const apiData = await getCustomerAdminById(3);
+        const apiData = await getCustomerAdminById(5);
         setQuestionnaires(apiData.questionnaires);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -45,7 +45,7 @@ export default function Index() {
 
           const newQuestionnaire = {
               questionnaireTitle: updatedRow.questionnaireTitle,
-              customerAdminId: 2,
+              customerAdminId: 5,
           }
           const response = await postQuestionnaire(newQuestionnaire)
           console.log(response);

@@ -76,6 +76,7 @@ function Index() {
         ...prev,
         [customerAdminId]: selectedBank
       }));
+      
      // setSelectedQuestionnaireBanks(selectedBank);
       console.log("Assigned Questionnaires:", selectedBank);
     } catch (error) {
@@ -103,66 +104,68 @@ function Index() {
         ? { ...prevSelected, [bank.questionnaireBankTitle]: bank }
         : Object.fromEntries(Object.entries(prevSelected).filter(([key]) => key !== bank.questionnaireBankTitle));
       console.log("Updated Selection:", updatedSelection);
+      console.log("selected qb",selectedQuestionnaireBanks);
       return updatedSelection;
     });
   };
 
-  // const onSaveRow = async (id, updatedRow, oldRow) => {
-  //   console.log("Selected Banks for Customer Admin ID:", updatedRow.customerAdminId, selectedQuestionnaireBanks);
-  //   try {
-  //     if (!updatedRow.isNew) {
-  //       const updatedData = await editCustomerAdmin(oldRow.customerAdminId, updatedRow);
-  //       const updatedRows = rows.map(row => (row.id === updatedData.customerAdminId ? updatedData : row));
+  const onSaveRow = async (id, updatedRow, oldRow) => {
+    console.log("Selected Banks for Customer Admin ID:", updatedRow.customerAdminId);
+    console.log("oooo",selectedQuestionnaireBanks);
+    try {
+      if (!updatedRow.isNew) {
+        const updatedData = await editCustomerAdmin(oldRow.customerAdminId, updatedRow);
+        const updatedRows = rows.map(row => (row.id === updatedData.customerAdminId ? updatedData : row));
 
-  //       // const combinedBanks = {
-  //       //   ...assignedQuestionnaires,
-  //       //   ...selectedQuestionnaireBanks
-  //       // };
-  //       // console.log('Combined Banks:', combinedBanks);
+        // const combinedBanks = {
+        //   ...assignedQuestionnaires,
+        //   ...selectedQuestionnaireBanks
+        // };
+        // console.log('Combined Banks:', combinedBanks);
 
-  //       // const selectedBankss = Object.values(combinedBanks);
-  //       // console.log('Selected Banks:', selectedBankss);
+        // const selectedBankss = Object.values(combinedBanks);
+        // console.log('Selected Banks:', selectedBankss);
 
 
-  //       const selectedBanks = Object.values(selectedQuestionnaireBanks);
-  //       console.log('Selected Banks:', selectedBanks);
+        const selectedBanks = Object.values(selectedQuestionnaireBanks);
+        console.log('Selected Banks:', selectedBanks);
 
-  //       for (const bank of selectedBanks) {
-  //         const newQuestionnaire = {
-  //           questionnaireTitle: bank.questionnaireBankTitle,
-  //           customerAdminId: updatedRow.customerAdminId,
-  //         }
-  //         const response = await postQuestionnaire(newQuestionnaire);
-  //         // console.log("newQuestionnaire :", response)
-  //         const questionnaireQuestionBanks = bank.questionnaireQuestionBanks
-  //         for (const qqb of questionnaireQuestionBanks) {
-  //           const newQuestion = {
-  //             questionText: qqb.questionBank.questionBankText,
-  //             customerAdminId: updatedRow.customerAdminId,
-  //             questionCategoryId: qqb.questionBank.questionCategoryId
-  //           }
-  //           const quesResponse = await postQuestion(newQuestion);
-  //           // console.log("newQuestion : ",quesResponse);
-  //           const newQuestionnaireQuestion = {
-  //             questionnaireId: response.questionnaireId,
-  //             questionId: quesResponse.questionId,
-  //             customerAdminId: updatedRow.customerAdminId,
-  //             serialNo: 2
-  //           }
+        for (const bank of selectedBanks) {
+          const newQuestionnaire = {
+            questionnaireTitle: bank.questionnaireBankTitle,
+            customerAdminId: updatedRow.customerAdminId,
+          }
+          const response = await postQuestionnaire(newQuestionnaire);
+           console.log("newQuestionnaire :", response)
+          const questionnaireQuestionBanks = bank.questionnaireQuestionBanks
+          for (const qqb of questionnaireQuestionBanks) {
+            const newQuestion = {
+              questionText: qqb.questionBank.questionBankText,
+              customerAdminId: updatedRow.customerAdminId,
+              questionCategoryId: qqb.questionBank.questionCategoryId
+            }
+            const quesResponse = await postQuestion(newQuestion);
+             console.log("newQuestion : ",quesResponse);
+            const newQuestionnaireQuestion = {
+              questionnaireId: response.questionnaireId,
+              questionId: quesResponse.questionId,
+              customerAdminId: updatedRow.customerAdminId,
+              serialNo: 2
+            }
 
-  //           const qqResponse = await postQuestionnaireQuestion(newQuestionnaireQuestion);
-  //           console.log("newQuestionnaireQuestion : ", qqResponse);
-  //         }
-  //       }
-  //       // setRows(updatedRows);
-  //       getAllCustomerAdminsData();
-  //       setOpen(false);
-  //       setSelectedQuestionnaireBanks({});
-  //     }
-  //   } catch (error) {
-  //     console.error('Error saving selected questionnaire banks:', error);
-  //   }
-  // };
+            const qqResponse = await postQuestionnaireQuestion(newQuestionnaireQuestion);
+            console.log("newQuestionnaireQuestion : ", qqResponse);
+          }
+        }
+        // setRows(updatedRows);
+        getAllCustomerAdminsData();
+        setOpen(false);
+        setSelectedQuestionnaireBanks({});
+      }
+    } catch (error) {
+      console.error('Error saving selected questionnaire banks:', error);
+    }
+  };
 
 
 
@@ -253,7 +256,7 @@ function Index() {
         <FullEditDataGrid
           columns={columns}
           rows={rows}
-        //  onSaveRow={onSaveRow}
+          onSaveRow={onSaveRow}
         />
       </div>
     </>

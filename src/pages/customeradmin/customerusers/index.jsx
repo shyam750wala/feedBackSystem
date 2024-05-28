@@ -20,7 +20,7 @@ function Index() {
 
     const fetchDataFromApi = async () => {
         try {
-            const apiData = await getCustomerUsersBycustomeradmin(3);
+            const apiData = await getCustomerUsersBycustomeradmin(5);
             const formattedData = apiData.map((item) => ({
                 id: item.customerUserId,
                 customerUserId: item.customerUserId,
@@ -44,10 +44,13 @@ function Index() {
 
         const fetchGetAllQuestionnaire = async () => {
             try {
-                const apiData = await getQuestionnaireByCustomerId(3);
-                console.log("api",apiData);
-                setQuestionnaires(apiData);
-                console.log("aaaaaaa",questionnaires);
+                const apiData = await getQuestionnaireByCustomerId(5);
+                console.log("api", apiData);
+        
+                // Convert the object into an array
+                const formattedData = [apiData]; // Assuming apiData is an object, convert it into an array
+                setQuestionnaires(formattedData);
+                console.log("formattedData", formattedData);
             } catch (error) {
                 console.error('Error fetching questionnaires:', error); 
             }

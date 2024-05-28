@@ -14,7 +14,7 @@ const Create = () => {
     customerUserTokenId: generateThreeDigitNumber(),
     customerUserName: "",
     password: "",
-    customerAdminId: 1,
+    customerAdminId: 5,
   })
  
   const handleFormSubmit = async (values) => {
