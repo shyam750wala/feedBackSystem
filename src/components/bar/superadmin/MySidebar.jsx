@@ -132,13 +132,13 @@ const MySidebar = () => {
             >
               Questionnaire Banks
             </Typography>
-            <Item
+            {/* <Item
               title="Tables"
               to="/tables"
               icon={<PeopleOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
-            />
+            /> */}
             <Item
               title="Show"
               to="/questionnairebanks"

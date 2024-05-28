@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from '../../../components/Header'
-import { deleteQuestionnaireBank, editQuestionnaireBank, getAllQuestionnaireBanks } from '../../../services/superadmin';
+import { deleteQuestionnaireBank, editQuestionnaireBank, getAllQuestionnaireBanks, postQuestionnaireBank } from '../../../services/superadmin';
 import { useTheme } from '@emotion/react';
 import { tokens } from '../../../theme';
 import { Box } from '@mui/material';
@@ -13,7 +13,8 @@ import { Link } from 'react-router-dom';
 
 export default function Index() {
 
-
+  const theme = useTheme();
+  const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
 
   useEffect(() => {
@@ -31,11 +32,22 @@ export default function Index() {
     fetchDataFromApi();
   }, []);
 
-  const theme = useTheme();
-  const colors = tokens(theme.palette.mode);
+  
 
   const onSaveRow = async (id, updatedRow, oldRow, oldRows) => {
-    if (!updatedRow.isNew) {
+    if (updatedRow.isNew) {
+      //Post call
+      try {
+          const newQuestionnaireBank = {
+              questionnaireBankTitle: updatedRow.questionnaireBankTitle,
+              superAdminId: 2,
+          }
+          const response = await postQuestionnaireBank(newQuestionnaireBank)
+          console.log(response);
+      } catch (error) {
+          console.error('Error posting newQuestionnaireBank :', error);
+      }
+  } else {
       //Edit call
       try {
         //console.log("update qb : ", updatedRow);
@@ -44,7 +56,17 @@ export default function Index() {
       } catch (error) {
         console.error('Error updating QuestionnaireBank :', error);
       }
-    }
+  }
+    // if (!updatedRow.isNew) {
+    //   //Edit call
+    //   try {
+    //     //console.log("update qb : ", updatedRow);
+    //     const apiData = await editQuestionnaireBank(oldRow.questionnaireBankId, updatedRow)
+    //     console.log(apiData);
+    //   } catch (error) {
+    //     console.error('Error updating QuestionnaireBank :', error);
+    //   }
+    // }
   };
 
   const onDeleteRow = async (id, oldRow, oldRows) => {
@@ -71,21 +93,24 @@ export default function Index() {
       editable: true,
       //Added on 9-05-2024
       renderCell: (params) => (
-        <Link to={`/questionnairebank/${params.row.id}`}>
+        <Link to={`/questionnairebank/${params.row.questionnaireBankId}`}
+          style={{ textDecoration: 'none', color: 'inherit',fontSize:'11pt' }}
+        >
           {params.value}
         </Link>
       ),
     },
-    {
-      field: 'superAdmin',
-      headerName: "SuperAdmin Email ID",
-      flex: 0.5,       //Added by vanshita on 1-05-2024
-      valueGetter: (params) => params.value.emailId,
-      //   {
-      //   console.log(params.value.emailId);
-      //   params.value.emailId
-      // }
-    },
+    // {
+    //   field: 'superAdmin',
+    //   headerName: "SuperAdmin Email ID",
+    //   flex: 0.5,       //Added by vanshita on 1-05-2024
+
+    //   valueGetter: (params) => params.value.emailId, 
+    //   // {
+    //   //   console.log(params.value.emailId);
+    //   //   // params.value.emailId
+    //   // }
+    // },
     {
       field: "status",
       headerName: "Status",
@@ -117,6 +142,7 @@ export default function Index() {
             },
             "& .name-column--cell": {
               color: colors.greenAccent[300],
+              textDecoration: 'none',
             },
             "& .MuiDataGrid-columnHeaders": {
               backgroundColor: colors.blueAccent[700],
@@ -131,14 +157,14 @@ export default function Index() {
               backgroundColor: colors.blueAccent[700],
             },
             "& .MuiCheckbox-root": {
-              color: `${colors.greenAccent[200]} !important`,
+              color:`${colors.greenAccent[200]} !important`,
             },
             "& .MuiDataGrid-toolbarContainer ": {
-              display: 'none'
+              // display: 'none'
             },
-            // "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
-            //   color: `${colors.grey[100]} !important`,
-            // },
+            "& .MuiDataGrid-toolbarContainer .MuiButton-text": {
+              color: `${colors.grey[100]} !important`,
+            },
           }}
         >
 

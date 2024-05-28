@@ -5,7 +5,7 @@ import { getAllCustomerUsers, getAllQuestionnaireAssignments, getAllQuestionnair
 import Header from '../../../components/Header';
 import { tokens } from '../../../theme';
 import { object } from 'yup';
-import { getQuestionnaireByCustomerUserId } from '../../../services/customeruser';
+import { getQuestionnaireAssignmentsByCustomerUserId, getQuestionnaireByCustomerUserId } from '../../../services/customeruser';
 
 function Index() {
     const theme = useTheme();
@@ -29,7 +29,7 @@ function Index() {
                 password: item.password,    
                 customerAdminId: item.customerAdminId,
                 status: item.status,
-                QuitionnaireAssign: "Questionnaire Assign",
+                QuestionnaireAssign: "Questionnaire Assign",
                 isNew: false
             }));
             setRows(formattedData);
@@ -56,7 +56,7 @@ function Index() {
 
         const fetchquestionnaireByCustomerUser = async (customerUserId) => {
             try{
-                const assignedquestionnaire = await getQuestionnaireByCustomerUserId(customerUserId)
+                const assignedquestionnaire = await getQuestionnaireAssignmentsByCustomerUserId(customerUserId)
                 console.log("jsbjsbjsf",assignedquestionnaire);       
             }
             catch(error)
@@ -70,7 +70,7 @@ function Index() {
 
     const fetchAssignedQuestionnaires = async (customerUserId) => {
         try {
-            const assigned = await getQuestionnaireByCustomerUserId(customerUserId)
+            const assigned = await getQuestionnaireAssignmentsByCustomerUserId(customerUserId)
             console.log("assigned",assigned);
             const selectedBank = {};
             assigned.forEach(assignment => {
@@ -137,7 +137,7 @@ function Index() {
         { field: 'customerAdminId', headerName: 'Customer Admin Id', flex: 1 },
         { field: 'status', headerName: 'Status', flex: 1 },
         {
-            field: 'QuitionnaireAssign',
+            field: 'QuestionnaireAssign',
             headerName: 'Assign Questionnaire',
             flex: 1,
             editable:true,

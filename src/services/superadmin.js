@@ -133,25 +133,39 @@ export const deleteQuestionBank = async (idToDelete) => {
     }
 }
 
+// //[POST] Call to post new QuestionnaireQuestionBank
+// export const postQuestionnaireQuestionBank = async (QuestionnaireBankId, QuestionBankIds) => {
+//     try {
+//         console.log(QuestionBankIds);
+//         // return axios.post(`${apiURL}/QuestionBanks`, newQuestionBank);
+//         const promises = QuestionBankIds.map(async (qid) => {
+//             const data = {
+//                 questionnaireBankId: QuestionnaireBankId,
+//                 questionBankId: qid,
+//                 serialNo: 1,
+//                 superAdminId: 2
+//             }
+//             const response = await axios.post(`${apiURL}/QuestionnaireQuestionBanks`, data)
+//             return response.data;
+//         })
+//         const results = await Promise.all(promises);
+//         return results;
+//     } catch (error) {
+//         console.error('Error posting question bank :', error);
+//         throw error;
+//     }
+// }
+
 //[POST] Call to post new QuestionnaireQuestionBank
-export const postQuestionnaireQuestionBank = async (QuestionnaireBankId, QuestionBankIds) => {
+export const postQuestionnaireQuestionBank = async (newQuestionnaireQuestionBank) => {
     try {
-        console.log(QuestionBankIds);
-        // return axios.post(`${apiURL}/QuestionBanks`, newQuestionBank);
-        const promises = QuestionBankIds.map(async (qid) => {
-            const data = {
-                questionnaireBankId: QuestionnaireBankId,
-                questionBankId: qid,
-                serialNo: 1,
-                superAdminId: 1
-            }
-            const response = await axios.post(`${apiURL}/QuestionnaireQuestionBanks`, data)
-            return response.data;
-        })
-        const results = await Promise.all(promises);
-        return results;
+        // console.log(newQuestionnaireQuestionBank);
+
+        const response = await axios.post(`${apiURL}/QuestionnaireQuestionBanks`, newQuestionnaireQuestionBank)
+
+        return response;
     } catch (error) {
-        console.error('Error posting question bank :', error);
+        console.error('Error posting QuestionnaireQuestionBank :', error);
         throw error;
     }
 }
@@ -193,4 +207,14 @@ export const editCustomerAdmin = async (id, newCustomerAdmin) => {
         throw error;
     }
 }
+//[DELETE] Call to delete QuestionnaireQuestionBank By questionBankId
+export const deleteQuestionnaireQuestionBankByQuestionBankId = async (questionBankId) => {
+    try {
+        const response = await axios.delete(`${apiURL}/QuestionnaireQuestionBanks/DeleteByQuestionBankId/${questionBankId}`)
+        return response.data;
 
+    } catch (error) {
+        console.error('Error deleting Questionnaire Question Bank  :', error);
+        throw error;
+    }
+}

@@ -11,7 +11,7 @@ import Dashboard from './pages/superadmin/Dashboard';
 import MyDashboard from './pages/customeradmin/Dashboard';
 import CustomerUserDashboard from './pages/customeruser/Dashboard';
 import Tables from './pages/superadmin/Tables';
-import QuestionnaireBanks from './pages/superadmin/questionnaireBanks';
+import QuestionnaireBanks from './pages/superadmin/questionnaireBanks/index';
 import Create from './pages/superadmin/questionnaireBanks/create';
 import Category from './pages/superadmin/questionBanks/category';
 import QuestionnaireBankView from './pages/superadmin/questionnaireBanks/view';
@@ -27,6 +27,7 @@ import CustomerUsers from './pages/customeradmin/customerusers';
 import CreateCustomerUser from './pages/customeradmin/customerusers/create';
 import Login from './pages/customeradmin/customerusers/login';
 import CreateQuestion from './pages/customeradmin/questions/create';
+import SingleQuestionnaireBank from './pages/superadmin/questionnaireBanks/singleQuestionnaireBank';
 
 
 
@@ -35,7 +36,7 @@ function App() {
 
   const [theme, colorMode] = useMode();
   const [isSidebar, setIsSidebar] = useState(true);
-  const userRole = "customeradmin";
+  const userRole = "superadmin";
 
   // Rendering sidebar based on user role
   const renderSidebar = () => {
@@ -67,7 +68,7 @@ function App() {
                 <Route path="/tables" element={<Tables />} />
                 <Route path="/questionnairebanks" element={<QuestionnaireBanks />} />
                 <Route path="/questionnairebanks/create" element={<Create />} />
-                <Route path="/questionnairebank/:id" element={<QuestionnaireBankView />} />
+                <Route path="/questionnairebank/:id" element={<SingleQuestionnaireBank />} />
                 <Route path="/questionbanks/create" element={<Category />} />
                 <Route path="/customeradmins" element={<CustomerAdmins />} />
               </Routes>
@@ -90,10 +91,11 @@ function App() {
             {/* Customer User Routes */}
             {userRole === "customeruser" && (
               <Routes>
+                <Route path="/" element={<Login />} />
                 <Route path="/customeruser/dashboard" element={<CustomerUserDashboard />} />
                 <Route path="customeruser/questionnaires" element={<CustomerUserQuestionnaires />} />
                 <Route path="/questionnaire/:id" element={<FeedbackForm />} />
-                <Route path="/" element={<Login />} />
+                
               </Routes>
 
             )}

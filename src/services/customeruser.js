@@ -40,9 +40,9 @@ export const postFeedbackDetails = async (newFeedbackDetails) => {
 
 //Added 23-05-24
 
-export const getQuestionnaireByCustomerUserId = async (customeruserId) => {
+export const getQuestionnaireAssignmentsByCustomerUserId = async (customeruserId) => {
     try {
-        const response = await axios.get(`${apiURL}/QuestionnaireAssignments/questionnaireByCustomerUserId/${customeruserId}`)
+        const response = await axios.get(`${apiURL}/QuestionnaireAssignments/QuestionnaireByCustomerUserId/${customeruserId}`)
         return response.data;
     } catch (error) {
         console.error(`Error fetching questionnaireAssignment  for customerUserId: ${customeruserId} :`, error);
